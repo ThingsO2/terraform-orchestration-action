@@ -21,7 +21,9 @@ const getGitModifiedDirectories = (basepath, base_ref, head_ref, exclude_directo
     const options = {
         baseDir: basepath,
         binary: 'git',
-        maxConcurrentProcesses: 1
+        maxConcurrentProcesses: 1,
+        config: [],
+        trimmed: false
     };
     try {
         const git = (0, simple_git_1.default)(options);

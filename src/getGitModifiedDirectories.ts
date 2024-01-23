@@ -8,7 +8,9 @@ export const getGitModifiedDirectories = async (basepath: string, base_ref: stri
     const options: SimpleGitOptions = {
         baseDir: basepath,
         binary: 'git',
-        maxConcurrentProcesses: 1
+        maxConcurrentProcesses: 1,
+        config: [],
+        trimmed: false
     }
     try {
         const git: SimpleGit = simpleGit(options)

@@ -1,6 +1,5 @@
 {
   "name": "terraform-orchestration-action",
-  "version": "v1.0.4",
   "description": "",
   "main": "dist/index.js",
   "license": "GPL-3.0-only",
