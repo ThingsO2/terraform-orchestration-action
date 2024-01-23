@@ -12,20 +12,20 @@ export const execTerragrunt = (processCwd: string, workspace: string | undefined
     }
 
     log.info('terragrunt run-all validate')
-    if (!spawnSyncTerragrunt(['run-all', 'validate'], log)) {
+    if (!spawnSyncTerragrunt(['run-all', 'validate' ], log)) {
         log.error('validate failed')
         return false
     }
 
     log.info('terragrunt run-all plan')
-    if (!spawnSyncTerragrunt(['run-all','plan', '-out=plan'], log)) {
+    if (!spawnSyncTerragrunt(['run-all','plan', '-out=plan' ], log)) {
         log.error('plan failed')
         return false
     }
 
     if (apply === true) {
         log.info('terragrunt run-all apply')
-        if (!spawnSyncTerragrunt(['run-all','apply', 'plan'], log)) {
+        if (!spawnSyncTerragrunt(['run-all','apply', 'plan' ], log)) {
             log.error('apply failed')
             return false
         }

@@ -39,13 +39,13 @@ export const main = (input: Input, log: LogInterface): void => {
                 // check if root path was update
 
                 console.log("********componentPath --> " , componentPath)
-                const filtered = componentPath.filter((x : string) => x.includes(input.commonModules.toString()));
+
                 return componentPath.includes(input.commonModules);
             });
 
             if (runAll) {
               log.info("Running for all modules using Terragrunt . . . .");
-              // execTerragrunt(processCwd,input.workspace, input.apply, log);
+              execTerragrunt(processCwd,input.workspace, input.apply, log);
             } else {
               log.info("Using Terraform for modules");
               // const componentsToRun = getDirectoriesToRun(components, input.workingDirectory, input.commonModules, input.excludeDirectories, log)
