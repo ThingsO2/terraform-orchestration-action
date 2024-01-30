@@ -23,6 +23,9 @@ inputs:
   apply:
     description: 'Boolean variable to determine if the action should apply the changes'
     required: false
+  batchSize:
+    description: 'If Terragrunt should apply, this parameter sets the size of directories to be processed each time.'
+    required: false
 runs:
   using: 'node16'
   main: 'dist/index.js'

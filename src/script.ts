@@ -13,7 +13,8 @@ try {
         excludeDirectories: ['.github','root_path','010-awm','999-legacy-projects','tools', 'docs'],
         commonModules: ['000-module'],
         workspace: undefined,
-        apply: false
+        apply: false,
+        batchSize: 20
     }, new Log())
 } catch (error) {
     console.error(error)

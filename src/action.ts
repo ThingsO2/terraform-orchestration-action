@@ -16,6 +16,7 @@ try {
         excludeDirectories: core.getInput('excludeDirectories').split(','),
         commonModules: core.getInput('commonModules').split(','),
         apply: core.getInput('apply') === "true",
+        batchSize: parseInt(core.getInput('batchSize'))
         // tfeToken: core.getInput('tfeToken') || undefined,
         // organizationName: core.getInput('organizationName') || undefined
     }, new Log())

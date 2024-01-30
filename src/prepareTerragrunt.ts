@@ -3,9 +3,7 @@ import path from 'path'
 import { LogInterface } from './main'
 import {execTerragrunt} from "./execTerragrunt"
 
-const batchSize: number = 5;
-
-export const prepareTerragrunt = (processCwd: string, workingDirectory: string , apply: boolean, log: LogInterface): boolean =>  {
+export const prepareTerragrunt = (processCwd: string, workingDirectory: string ,batchSize: number, apply: boolean, log: LogInterface): boolean =>  {
 const dirBatches: string[][] = getDirInBatches(workingDirectory, batchSize);
 
 for (const batch of dirBatches) {

@@ -1751,22 +1751,17 @@ const main = (input, log) => {
     log.info(`Common modules: ${input.commonModules}`);
     log.info(`Workspace: ${input.workspace}`);
     log.info(`Apply: ${input.apply}`);
+    log.info(`Batch size: ${input.batchSize}`);
     const processCwd = process.cwd(); //pwd
     checkMainGitPath_1.checkMainGitPath(log).then(() => {
-        log.info("******** geGitModifiedDirs");
         getGitModifiedDirectories_1.getGitModifiedDirectories(input.workingDirectory, input.baseRef, input.headRef, input.excludeDirectories, log)
             .then(components => {
-            log.info("******** check runAll");
-            // components.push("000-module"); // Only for test
             const runAll = components.some(componentPath => {
                 return componentPath.includes(input.commonModules);
             });
             if (runAll) {
                 log.info("Running for all modules using Terragrunt . . . .");
-                console.log("workingDir --> ", input.workingDirectory);
-                console.log("processCwd --> ", processCwd);
-                prepareTerragrunt_1.prepareTerragrunt(processCwd, input.workingDirectory, input.apply, log);
-                // execTerragrunt(processCwd, input.apply, log);
+                prepareTerragrunt_1.prepareTerragrunt(processCwd, input.workingDirectory, input.batchSize, input.apply, log);
             }
             else {
                 log.info("Using Terraform for modules");
@@ -2127,8 +2122,7 @@ exports.prepareTerragrunt = void 0;
 const fs = __importStar(__webpack_require__(747));
 const path_1 = __importDefault(__webpack_require__(622));
 const execTerragrunt_1 = __webpack_require__(181);
-const batchSize = 5;
-const prepareTerragrunt = (processCwd, workingDirectory, apply, log) => {
+const prepareTerragrunt = (processCwd, workingDirectory, batchSize, apply, log) => {
     const dirBatches = getDirInBatches(workingDirectory, batchSize);
     for (const batch of dirBatches) {
         console.log('Batch to work:', batch);
@@ -23767,6 +23761,9 @@ try {
         excludeDirectories: core.getInput('excludeDirectories').split(','),
         commonModules: core.getInput('commonModules').split(','),
         apply: core.getInput('apply') === "true",
+        batchSize: parseInt(core.getInput('batchSize'))
+        // tfeToken: core.getInput('tfeToken') || undefined,
+        // organizationName: core.getInput('organizationName') || undefined
     }, new Log());
 }
 catch (error) {
