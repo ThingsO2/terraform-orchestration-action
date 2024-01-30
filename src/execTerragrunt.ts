@@ -2,7 +2,7 @@ import { spawnSync, SpawnSyncReturns } from 'child_process';
 import path from 'path';
 import { LogInterface } from './main';
 
-export const execTerragrunt = (processCwd: string, workspace: string | undefined, apply: boolean, log: LogInterface): boolean => {
+export const execTerragrunt = (processCwd: string, apply: boolean, log: LogInterface): boolean => {
     process.chdir(path.join(processCwd)); 
 
     log.info('terragrunt run-all init')

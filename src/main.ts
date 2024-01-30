@@ -2,7 +2,7 @@ import { getGitModifiedDirectories } from './getGitModifiedDirectories'
 import { getDirectoriesToRun } from './getDirectories'
 import { checkMainGitPath } from './checkMainGitPath'
 import {execTerraform} from "./execTerraform"
-import {execTerragrunt} from "./execTerragrunt"
+import {prepareTerragrunt} from "./prepareTerragrunt"
 
 interface Input {
     workingDirectory: string
@@ -28,30 +28,30 @@ export const main = (input: Input, log: LogInterface): void => {
     log.info(`Common modules: ${input.commonModules}`)
     log.info(`Workspace: ${input.workspace}`)
     log.info(`Apply: ${input.apply}`)
-    log.info("******** some changed here")
-    const processCwd = process.cwd()
+    const processCwd = process.cwd() //pwd
     checkMainGitPath(log).then(() => {
       log.info("******** geGitModifiedDirs")
         getGitModifiedDirectories(input.workingDirectory, input.baseRef, input.headRef, input.excludeDirectories, log)
             .then(components => {
               log.info("******** check runAll")
+              // components.push("000-module"); // Only for test
+              
               const runAll = components.some(componentPath => {
-                // check if root path was update
-
-                console.log("********componentPath --> " , componentPath)
-
                 return componentPath.includes(input.commonModules);
             });
 
             if (runAll) {
               log.info("Running for all modules using Terragrunt . . . .");
-              execTerragrunt(processCwd,input.workspace, input.apply, log);
+              console.log("workingDir --> " , input.workingDirectory)
+              console.log("processCwd --> " , processCwd)
+              prepareTerragrunt(processCwd, input.workingDirectory, input.apply, log);
+
             } else {
               log.info("Using Terraform for modules");
-              // const componentsToRun = getDirectoriesToRun(components, input.workingDirectory, input.commonModules, input.excludeDirectories, log)
-              // componentsToRun.map(componentPath => {
-              //   execTerraform( processCwd, componentPath, input.workspace, input.apply, log)
-              // });
+              const componentsToRun = getDirectoriesToRun(components, input.workingDirectory, input.commonModules, input.excludeDirectories, log)
+              componentsToRun.map(componentPath => {
+                execTerraform( processCwd, componentPath, input.workspace, input.apply, log)
+              });
             }
     }).catch(e => {
         log.error(e.message)
