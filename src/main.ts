@@ -3,6 +3,7 @@ import { getDirectoriesToRun } from './getDirectories'
 import { checkMainGitPath } from './checkMainGitPath'
 import {execTerraform} from "./execTerraform"
 import {prepareTerragrunt} from "./prepareTerragrunt"
+import {execTerragrunt} from "./execTerragrunt"
 
 interface Input {
     workingDirectory: string
@@ -45,6 +46,7 @@ export const main = (input: Input, log: LogInterface): void => {
               console.log("workingDir --> " , input.workingDirectory)
               console.log("processCwd --> " , processCwd)
               prepareTerragrunt(processCwd, input.workingDirectory, input.apply, log);
+              // execTerragrunt(processCwd, input.apply, log);
 
             } else {
               log.info("Using Terraform for modules");
