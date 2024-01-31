@@ -18,7 +18,7 @@ export const execTerragrunt = (processCwd: string, apply: boolean, log: LogInter
     }
 
     log.info('terragrunt run-all plan')
-    if (!spawnSyncTerragrunt(['run-all','plan', '-out=plan' ], log)) {
+    if (!spawnSyncTerragrunt(['run-all','plan', '-out=plan', '-refresh=false' ], log)) {
         log.error('plan failed')
         return false
     }

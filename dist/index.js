@@ -2019,7 +2019,7 @@ const execTerragrunt = (processCwd, apply, log) => {
         return false;
     }
     log.info('terragrunt run-all plan');
-    if (!spawnSyncTerragrunt(['run-all', 'plan', '-out=plan'], log)) {
+    if (!spawnSyncTerragrunt(['run-all', 'plan', '-out=plan', '-refresh=false'], log)) {
         log.error('plan failed');
         return false;
     }
